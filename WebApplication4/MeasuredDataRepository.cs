@@ -8,8 +8,6 @@ using ServiceStack.ServiceInterface.Auth;
 
 namespace WebApplication4
 {
-    //IOC for the entry/status services
-    //adds modularity, extensibility 
     public class MeasuredDataRepository
     {
         public IDbConnectionFactory DbConnectionFactory { get; set; }
@@ -24,26 +22,32 @@ namespace WebApplication4
             }
         }
 
-        public int RemoveVehicle(VehicleId vehicleId)
+        public int RemoveVehicle(VehicleById vehicleById)
         {
             using (var db = DbConnectionFactory.OpenDbConnection())
             {
-                //db.Select<Vehicle>("Make = {0} AND Model = {1} AND Year = {2}", vehicle.Make,
-                //    vehicle.Model, vehicle.Year);
-                //db.Delete<Vehicle>("Make = {0} AND Model = {1} AND Year = {2}", vehicle.Make,
-                //    vehicle.Model, vehicle.Year);
-                db.DeleteById<Vehicle>(vehicleId.Id);
+                db.DeleteById<Vehicle>(vehicleById.Id);
                 return 1;
             }
         }
 
-        public VehicleListResponse GetVehicles(int year, ISession session, IAuthSession authSession)
+        public int UpdateVehicle(VehicleById vehicle)
         {
             using (var db = DbConnectionFactory.OpenDbConnection())
             {
-                if (year == -1)
+                db.Update<Vehicle>(vehicle, v => v.Id == vehicle.Id);
+                return 1;
+            }
+        }
+
+        public VehicleListResponse GetVehicles(int year, int pageSize, int pageNumber, ISession session, IAuthSession authSession)
+        {
+            using (var db = DbConnectionFactory.OpenDbConnection())
+            {
+                if (year == default(int))
                 {
-                    var list = db.Select<Vehicle>();
+                    //var list = db.Select<Vehicle>();
+                    var list = db.Select<Vehicle>(q => q.Limit(skip:pageSize*(pageNumber-1), rows:pageSize));
                     return new VehicleListResponse { Vehicles = list };
                 }
                 else
@@ -51,11 +55,33 @@ namespace WebApplication4
                     var list = db.Select<Vehicle>(v => v.Year == year);
                     return new VehicleListResponse { Vehicles = list };
                 }
-                
-                //Array vehicleList = db.Select<Vehicle>(v => v.Year == year).ToArray();
-                
-                //var sumTotal = db.Select<Entry>(e => e.EntryTime == dateFull.Date).Sum(e => e.Quantity);
-                //return new StatusResponse { Goal = 500, Message = message, Total = sumTotal };
+            }
+        }
+
+        public VehicleListResponse GetVehicleById(int id)
+        {
+            using (var db = DbConnectionFactory.OpenDbConnection())
+            {
+                var vehicle = db.Select<Vehicle>(v => v.Id == id);
+                return new VehicleListResponse { Vehicles = vehicle };
+            }
+        }
+
+        public VehicleListResponse GetVehiclesByMake(string make, int pageSize, int pageNumber, ISession session, IAuthSession authSession)
+        {
+            using (var db = DbConnectionFactory.OpenDbConnection())
+            {
+                var list = db.Select<Vehicle>(v => v.Make == make);
+                return new VehicleListResponse { Vehicles = list };
+            }
+        }
+
+        public VehicleListResponse GetVehiclesByModel(string model, int pageSize, int pageNumber, ISession session, IAuthSession authSession)
+        {
+            using (var db = DbConnectionFactory.OpenDbConnection())
+            {
+                var list = db.Select<Vehicle>(v => v.Model == model);
+                return new VehicleListResponse { Vehicles = list };
             }
         }
 

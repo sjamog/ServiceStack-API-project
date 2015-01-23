@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using ServiceStack.DataAnnotations;
 using ServiceStack.ServiceHost;
+using ServiceStack.ServiceInterface;
 
 namespace WebApplication4
 {
-    [Route("/vehicles/add", "POST")]
-    [Route("/vehicles/add/{Make}/{Model}/{Year}")]
+    [Route("/vehicles", "POST")]
+    [Route("/vehicles/{Make}/{Model}/{Year}", "POST")]
+    [Route("/vehicles/{Make}/{Model}/{Year}", "GET")]
+    [Authenticate]
     public class Vehicle : IReturn<VehicleResponse>
     {
         [AutoIncrement]
@@ -18,11 +21,18 @@ namespace WebApplication4
         public int Year { get; set; }
     }
 
-    [Route("/vehicles/remove", "POST")]
-    [Route("/vehicles/remove/{Id}")]
-    public class VehicleId : IReturn<VehicleResponse>
+    //[Route("/vehicles/remove", "POST")]
+    [Route("/vehicles/{Id}", "GET")]
+    [Route("/vehicles/{Id}", "DELETE")]
+    [Route("/vehicles/{Id}", "PUT")]
+    [Route("/vehicles/{Id}/{Make}/{Model}/{Year}", "PUT")]
+    [Authenticate]
+    public class VehicleById : IReturn<VehicleResponse>
     {
         public int Id { get; set; }
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
     }
 
     public class VehicleResponse

@@ -19,6 +19,8 @@
 C:\Projects\WebApplication4\WebApplication4\bin\WebApplication4.dll.config
 C:\Projects\WebApplication4\WebApplication4\bin\WebApplication4.dll
 C:\Projects\WebApplication4\WebApplication4\bin\WebApplication4.pdb
+C:\Projects\WebApplication4\WebApplication4\bin\Castle.Core.dll
+C:\Projects\WebApplication4\WebApplication4\bin\Castle.Windsor.dll
 C:\Projects\WebApplication4\WebApplication4\bin\EntityFramework.dll
 C:\Projects\WebApplication4\WebApplication4\bin\EntityFramework.SqlServer.dll
 C:\Projects\WebApplication4\WebApplication4\bin\ServiceStack.Common.dll
@@ -33,6 +35,8 @@ C:\Projects\WebApplication4\WebApplication4\bin\ServiceStack.Text.dll
 C:\Projects\WebApplication4\WebApplication4\bin\System.Data.SQLite.dll
 C:\Projects\WebApplication4\WebApplication4\bin\System.Data.SQLite.EF6.dll
 C:\Projects\WebApplication4\WebApplication4\bin\System.Data.SQLite.Linq.dll
+C:\Projects\WebApplication4\WebApplication4\bin\Castle.Core.xml
+C:\Projects\WebApplication4\WebApplication4\bin\Castle.Windsor.xml
 C:\Projects\WebApplication4\WebApplication4\bin\EntityFramework.xml
 C:\Projects\WebApplication4\WebApplication4\bin\EntityFramework.SqlServer.xml
 C:\Projects\WebApplication4\WebApplication4\bin\ServiceStack.xml
